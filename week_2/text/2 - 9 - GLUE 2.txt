@@ -1,0 +1,191 @@
+
+Hello welcome to our second Glue Lecture.
+I hope everyone is enjoying the course so
+far. today's lecture is going to discuss
+robot models, which is kind of what we've
+been talking about here in module two. and
+again, this is kind of tailored to help
+with quiz two. So, in lecture this week we
+saw, Dr. Egarsteade showed two different
+models for our robot. And this, the same
+differential drive robot and so I kind of
+want to get into before I go into
+examples, why we use those two different
+models and why they're useful and how
+should kind of think about them and it
+should help you on the quiz. So what if,
+and you know, in class, we discussed this
+differential-drive robot, but what if we
+had a dancing robot, okay? This, this
+humanoid robot, now has 25 degrees of
+freedom, and has these arms, these knees,
+shoulders. It's, it's very articulated.
+And this is a lot to think about, right?
+So. I certainly, if I'm thinking about how
+I might want a robot to dance, I don't
+know exactly how I want every wrist, the
+ankle, the hips, that would be kind of a
+lot to coordinate for me, and it would
+make this project very hard. So let's
+imagine that instead what we're thinking
+about is just how we want the robot to be
+dancing. Some style of movement that we
+want it to use. This is kind of an easy
+thing to think about, and then we can
+imagine In that somehow I have made a
+mapping between style of dancing and joint
+angles and then somewhere else I might
+have in I think of that as this pink box
+here and then somewhere else I have kind
+of a mapping between angles and forces and
+exactly what controller needs to be
+running on the robot. Then this task is
+very easy, right? We just think of desired
+dancing style. We tell that, and how that
+should change over time. And then these
+maps take care of exactly what's going on
+under the hood. So we think of these as
+layers of abstraction that are easier to
+work with than others. Of course, this one
+is necessary. We need to tell that the
+motors that are controlling these joint s
+what to do, but from a planning standpoint
+this is easier, right. Now, in this case
+this, this green map is provided by the
+manufacturer of this robot, which is a,
+now robot. This might be harder to come
+by, but Let's say we have it and just kind
+of as a example of what we might think.
+Let's say we want the robot to be, be
+cheer leading. We'd specify that at this
+end. now comes to movement that we think
+kind of represents the style of movement
+And if I change that, maybe I change the
+way the robot's moving. Again, this map
+and this map are taking care of kind of
+all the hard stuff and then all I have to
+think about is this guy. So this kind of a
+really Involved an example. Kind of an
+unusual example, but it gets this idea
+that here's the layer of attraction where
+we want to be using. If we make this 1
+time mapping, between the stylus movement
+to join angles, to join forces, we get off
+this kind of movement. And we have this
+same situation with the differential drive
+robot from class. So here's kind of a
+close-up of that robot.
+It has these two wheels underneath that
+can turn independently of each other. That
+what makes it differential drive. That's
+what makes it move. Kind of hard to think
+about, we don't, you know, telling exactly
+which wheel should move exactly how at
+every moment would be kind of hard. We
+really just want to think about the
+resulting behavior. So we think about that
+in terms of these V and W, the speed of
+the robot and how it's turning. Right?
+That can make sense. It's similar to
+driving a car. Which is a experience that
+we kind of all share. And now, we still
+somehow need to get out exactly what the
+wheels should be doing. Right? The
+velocities, the distance they should be
+traveling. And then, somehow, we have to
+relate that to actually what we're
+measuring on the robot, right? These
+encoder ticks. And so we accomplish that
+through odometry. And we used these two
+maps to kind of have this, so that we can
+think about programming the robot in terms
+of these. An d out, we get implemental,
+implementable commands for the robot.
+Right? So we saw these maps in class. We
+saw lots of maps. And what the maps are,
+right, are just equations that relate. The
+high level variables to, or the high level
+variables here, sorry V and W to the low
+level variables here VR and VL, the
+velocity of each wheel. Right.
+And we can relate the velocity of each
+wheel to the distance of each wheel.
+That's just a, Normal equation right, rate
+of change. And here, then we can take
+those distances and relate it to ticks. So
+we can think of these equations now as
+maps that let us move between these layers
+of abstraction. And this is exactly what
+some of the questions on the home, on the
+quiz are going to ask. Going back and
+forth between these layers of abstraction
+and it's just a matter of implementing the
+correct equations. So what if we have this
+question or approach this question. What
+happens to the robot, what's the resulting
+behavior if z is zero and w is constant?
+So this is kind of going from this high
+level behavior up here down to what's
+exactly happening on the wheels at this
+end. And all we need to do is use these
+basic equations that I had on the last
+light as well and that , introduced in
+lecture. We can fill in for v being 0 for
+the left and the right and for w as being
+sub constant. And now you see that you're
+going to get constant speed for both the
+left and the right, and one is just going
+to be the negative of the other. So one
+wheel's going forward, and one wheel's
+going backwards. So what's happening to
+the robot? This might be easy to intuit
+here, right? Because we know that v is
+zero, and if w is constant, we are
+turning. But here you can see exactly how
+that contributes to the velocities of each
+wheel. So if you need a further guide,
+this is how to do it. We can see that the
+robot is just spinning around, right.
+Spin, spin, spin, right. One wheels
+turning forward, one wheels turning
+backwards, and it spins. So, kind of going
+from the other direction, now we're given
+information about exactly what the wheels
+are doing. Right? We have some specifics
+about this robot. Now, what happens,
+what's the high level behavior that we get
+out of it? So we can think about going
+from this direction. We start here. With
+information about the ticks on the
+encoders. We use odometry to relate that
+to wheel velocities. And then we're going
+to know what's happening on the, on the
+robot. So we had these equations here for,
+to relate ticks to distance. So if we plug
+in our number of ticks in our. Parameters,
+radius of the wheel, number of ticks per
+lo, per rotation of the wheel. We get that
+the distance the right wheel travels is
+ten, and that should actually be ten
+inches, right? And the distance for the
+left wheel is six. Now we'll call another
+set of equations, right. This is the set
+of equations that lets us figure out where
+in terms of x, y, and fee, we are based on
+the distances the wheels have turned. So
+it's just a matter of plugging in from
+here again. We take this, distance right,
+distance left, we compute Dc right?
+With this equation here and we get that C
+is 2 radiants and we plug that into this
+equation and we get an x and y position.
+Our previous position was zero and updated
+equations tells us that these terms are
+what, are what is happened to the robot.
+So, for the rest of the quiz, it's really
+just a matter of kind of imagining the
+robot in each of those scenarios, and
+seeing what happens. Just think through
+them, and I think you'll be great. Good
+luck on the quiz, and I'll see you at the
+forums.

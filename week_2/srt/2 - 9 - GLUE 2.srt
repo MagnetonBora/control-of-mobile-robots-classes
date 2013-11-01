@@ -1,0 +1,475 @@
+
+1
+00:00:00,012 --> 00:00:05,922
+Hello welcome to our second Glue Lecture.
+I hope everyone is enjoying the course so
+
+2
+00:00:05,934 --> 00:00:11,793
+far. today's lecture is going to discuss
+robot models, which is kind of what we've
+
+3
+00:00:12,083 --> 00:00:17,739
+been talking about here in module two. and
+again, this is kind of tailored to help
+
+4
+00:00:17,751 --> 00:00:23,340
+with quiz two. So, in lecture this week we
+saw, Dr. Egarsteade showed two different
+
+5
+00:00:23,352 --> 00:00:28,602
+models for our robot. And this, the same
+differential drive robot and so I kind of
+
+6
+00:00:29,002 --> 00:00:33,890
+want to get into before I go into
+examples, why we use those two different
+
+7
+00:00:33,902 --> 00:00:38,815
+models and why they're useful and how
+should kind of think about them and it
+
+8
+00:00:38,827 --> 00:00:44,454
+should help you on the quiz. So what if,
+and you know, in class, we discussed this
+
+9
+00:00:44,466 --> 00:00:50,027
+differential-drive robot, but what if we
+had a dancing robot, okay? This, this
+
+10
+00:00:50,039 --> 00:00:55,522
+humanoid robot, now has 25 degrees of
+freedom, and has these arms, these knees,
+
+11
+00:00:55,637 --> 00:01:01,223
+shoulders. It's, it's very articulated.
+And this is a lot to think about, right?
+
+12
+00:01:01,338 --> 00:01:06,232
+So. I certainly, if I'm thinking about how
+I might want a robot to dance, I don't
+
+13
+00:01:06,244 --> 00:01:11,022
+know exactly how I want every wrist, the
+ankle, the hips, that would be kind of a
+
+14
+00:01:11,034 --> 00:01:15,539
+lot to coordinate for me, and it would
+make this project very hard. So let's
+
+15
+00:01:15,551 --> 00:01:20,361
+imagine that instead what we're thinking
+about is just how we want the robot to be
+
+16
+00:01:20,373 --> 00:01:24,994
+dancing. Some style of movement that we
+want it to use. This is kind of an easy
+
+17
+00:01:25,006 --> 00:01:29,291
+thing to think about, and then we can
+imagine In that somehow I have made a
+
+18
+00:01:29,303 --> 00:01:33,857
+mapping between style of dancing and joint
+angles and then somewhere else I might
+
+19
+00:01:33,869 --> 00:01:39,218
+have in I think of that as this pink box
+here and then somewhere else I have kind
+
+20
+00:01:39,230 --> 00:01:43,598
+of a mapping between angles and forces and
+exactly what controller needs to be
+
+21
+00:01:43,610 --> 00:01:48,082
+running on the robot. Then this task is
+very easy, right? We just think of desired
+
+22
+00:01:48,094 --> 00:01:52,418
+dancing style. We tell that, and how that
+should change over time. And then these
+
+23
+00:01:52,430 --> 00:01:56,638
+maps take care of exactly what's going on
+under the hood. So we think of these as
+
+24
+00:01:56,650 --> 00:02:01,065
+layers of abstraction that are easier to
+work with than others. Of course, this one
+
+25
+00:02:01,077 --> 00:02:07,414
+is necessary. We need to tell that the
+motors that are controlling these joint s
+
+26
+00:02:07,414 --> 00:02:13,274
+what to do, but from a planning standpoint
+this is easier, right. Now, in this case
+
+27
+00:02:13,286 --> 00:02:18,755
+this, this green map is provided by the
+manufacturer of this robot, which is a,
+
+28
+00:02:18,871 --> 00:02:24,748
+now robot. This might be harder to come
+by, but Let's say we have it and just kind
+
+29
+00:02:24,760 --> 00:02:30,179
+of as a example of what we might think.
+Let's say we want the robot to be, be
+
+30
+00:02:30,191 --> 00:02:36,795
+cheer leading. We'd specify that at this
+end. now comes to movement that we think
+
+31
+00:02:36,807 --> 00:02:43,034
+kind of represents the style of movement
+And if I change that, maybe I change the
+
+32
+00:02:43,046 --> 00:02:49,052
+way the robot's moving. Again, this map
+and this map are taking care of kind of
+
+33
+00:02:49,064 --> 00:02:55,232
+all the hard stuff and then all I have to
+think about is this guy. So this kind of a
+
+34
+00:02:55,244 --> 00:03:00,129
+really Involved an example. Kind of an
+unusual example, but it gets this idea
+
+35
+00:03:00,141 --> 00:03:04,931
+that here's the layer of attraction where
+we want to be using. If we make this 1
+
+36
+00:03:04,943 --> 00:03:10,141
+time mapping, between the stylus movement
+to join angles, to join forces, we get off
+
+37
+00:03:10,153 --> 00:03:15,420
+this kind of movement. And we have this
+same situation with the differential drive
+
+38
+00:03:15,432 --> 00:03:19,464
+robot from class. So here's kind of a
+close-up of that robot.
+
+39
+00:03:19,467 --> 00:03:23,970
+It has these two wheels underneath that
+can turn independently of each other. That
+
+40
+00:03:23,982 --> 00:03:28,820
+what makes it differential drive. That's
+what makes it move. Kind of hard to think
+
+41
+00:03:28,832 --> 00:03:34,345
+about, we don't, you know, telling exactly
+which wheel should move exactly how at
+
+42
+00:03:34,357 --> 00:03:39,145
+every moment would be kind of hard. We
+really just want to think about the
+
+43
+00:03:39,157 --> 00:03:44,570
+resulting behavior. So we think about that
+in terms of these V and W, the speed of
+
+44
+00:03:44,582 --> 00:03:49,360
+the robot and how it's turning. Right?
+That can make sense. It's similar to
+
+45
+00:03:49,372 --> 00:03:53,611
+driving a car. Which is a experience that
+we kind of all share. And now, we still
+
+46
+00:03:53,623 --> 00:03:57,669
+somehow need to get out exactly what the
+wheels should be doing. Right? The
+
+47
+00:03:57,681 --> 00:04:02,106
+velocities, the distance they should be
+traveling. And then, somehow, we have to
+
+48
+00:04:02,118 --> 00:04:05,996
+relate that to actually what we're
+measuring on the robot, right? These
+
+49
+00:04:06,008 --> 00:04:10,858
+encoder ticks. And so we accomplish that
+through odometry. And we used these two
+
+50
+00:04:10,870 --> 00:04:16,680
+maps to kind of have this, so that we can
+think about programming the robot in terms
+
+51
+00:04:16,692 --> 00:04:22,111
+of these. An d out, we get implemental,
+implementable commands for the robot.
+
+52
+00:04:22,227 --> 00:04:27,717
+Right? So we saw these maps in class. We
+saw lots of maps. And what the maps are,
+
+53
+00:04:27,833 --> 00:04:33,608
+right, are just equations that relate. The
+high level variables to, or the high level
+
+54
+00:04:33,620 --> 00:04:38,389
+variables here, sorry V and W to the low
+level variables here VR and VL, the
+
+55
+00:04:38,401 --> 00:04:42,811
+velocity of each wheel. Right.
+And we can relate the velocity of each
+
+56
+00:04:42,823 --> 00:04:48,129
+wheel to the distance of each wheel.
+That's just a, Normal equation right, rate
+
+57
+00:04:48,141 --> 00:04:52,894
+of change. And here, then we can take
+those distances and relate it to ticks. So
+
+58
+00:04:52,906 --> 00:04:57,650
+we can think of these equations now as
+maps that let us move between these layers
+
+59
+00:04:57,662 --> 00:05:02,522
+of abstraction. And this is exactly what
+some of the questions on the home, on the
+
+60
+00:05:02,534 --> 00:05:07,253
+quiz are going to ask. Going back and
+forth between these layers of abstraction
+
+61
+00:05:07,265 --> 00:05:12,750
+and it's just a matter of implementing the
+correct equations. So what if we have this
+
+62
+00:05:12,762 --> 00:05:18,805
+question or approach this question. What
+happens to the robot, what's the resulting
+
+63
+00:05:18,817 --> 00:05:24,320
+behavior if z is zero and w is constant?
+So this is kind of going from this high
+
+64
+00:05:24,332 --> 00:05:29,790
+level behavior up here down to what's
+exactly happening on the wheels at this
+
+65
+00:05:29,802 --> 00:05:35,544
+end. And all we need to do is use these
+basic equations that I had on the last
+
+66
+00:05:35,556 --> 00:05:42,507
+light as well and that , introduced in
+lecture. We can fill in for v being 0 for
+
+67
+00:05:42,519 --> 00:05:48,468
+the left and the right and for w as being
+sub constant. And now you see that you're
+
+68
+00:05:48,480 --> 00:05:53,309
+going to get constant speed for both the
+left and the right, and one is just going
+
+69
+00:05:53,321 --> 00:05:58,150
+to be the negative of the other. So one
+wheel's going forward, and one wheel's
+
+70
+00:05:58,162 --> 00:06:02,993
+going backwards. So what's happening to
+the robot? This might be easy to intuit
+
+71
+00:06:03,005 --> 00:06:07,031
+here, right? Because we know that v is
+zero, and if w is constant, we are
+
+72
+00:06:07,043 --> 00:06:11,701
+turning. But here you can see exactly how
+that contributes to the velocities of each
+
+73
+00:06:11,713 --> 00:06:16,033
+wheel. So if you need a further guide,
+this is how to do it. We can see that the
+
+74
+00:06:16,045 --> 00:06:20,265
+robot is just spinning around, right.
+Spin, spin, spin, right. One wheels
+
+75
+00:06:20,277 --> 00:06:25,157
+turning forward, one wheels turning
+backwards, and it spins. So, kind of going
+
+76
+00:06:25,169 --> 00:06:31,045
+from the other direction, now we're given
+information about exactly what the wheels
+
+77
+00:06:31,057 --> 00:06:36,462
+are doing. Right? We have some specifics
+about this robot. Now, what happens,
+
+78
+00:06:36,577 --> 00:06:42,085
+what's the high level behavior that we get
+out of it? So we can think about going
+
+79
+00:06:42,097 --> 00:06:47,476
+from this direction. We start here. With
+information about the ticks on the
+
+80
+00:06:47,488 --> 00:06:53,189
+encoders. We use odometry to relate that
+to wheel velocities. And then we're going
+
+81
+00:06:52,791 --> 00:06:58,542
+to know what's happening on the, on the
+robot. So we had these equations here for,
+
+82
+00:06:58,656 --> 00:07:04,625
+to relate ticks to distance. So if we plug
+in our number of ticks in our. Parameters,
+
+83
+00:07:04,754 --> 00:07:11,406
+radius of the wheel, number of ticks per
+lo, per rotation of the wheel. We get that
+
+84
+00:07:11,418 --> 00:07:17,577
+the distance the right wheel travels is
+ten, and that should actually be ten
+
+85
+00:07:17,589 --> 00:07:24,117
+inches, right? And the distance for the
+left wheel is six. Now we'll call another
+
+86
+00:07:24,129 --> 00:07:30,211
+set of equations, right. This is the set
+of equations that lets us figure out where
+
+87
+00:07:30,223 --> 00:07:36,239
+in terms of x, y, and fee, we are based on
+the distances the wheels have turned. So
+
+88
+00:07:36,251 --> 00:07:42,059
+it's just a matter of plugging in from
+here again. We take this, distance right,
+
+89
+00:07:42,179 --> 00:07:49,180
+distance left, we compute Dc right?
+With this equation here and we get that C
+
+90
+00:07:49,192 --> 00:07:55,615
+is 2 radiants and we plug that into this
+equation and we get an x and y position.
+
+91
+00:07:55,747 --> 00:08:02,640
+Our previous position was zero and updated
+equations tells us that these terms are
+
+92
+00:08:02,652 --> 00:08:08,592
+what, are what is happened to the robot.
+So, for the rest of the quiz, it's really
+
+93
+00:08:08,604 --> 00:08:13,270
+just a matter of kind of imagining the
+robot in each of those scenarios, and
+
+94
+00:08:13,282 --> 00:08:18,249
+seeing what happens. Just think through
+them, and I think you'll be great. Good
+
+95
+00:08:18,261 --> 00:08:21,171
+luck on the quiz, and I'll see you at the
+forums.

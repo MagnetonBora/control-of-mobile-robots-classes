@@ -1,0 +1,294 @@
+
+1
+00:00:00,012 --> 00:00:05,383
+So now that we have established that we
+need a goal to goal behavior, and possibly
+
+2
+00:00:05,395 --> 00:00:10,668
+an avoid obstacle behavior in order to go
+between points a and b. and we have
+
+3
+00:00:10,680 --> 00:00:15,656
+figured out that if we have a differential
+drive robot that we can model as a
+
+4
+00:00:15,668 --> 00:00:20,965
+unicycle. With constant velocity v not.
+Then, what we can really control is the,
+
+5
+00:00:21,076 --> 00:00:26,616
+the heading. And the way we control it is
+phi dot is equal to omega. Now, let's
+
+6
+00:00:26,628 --> 00:00:30,893
+define the error, error equals to phi
+desire minus phi. So the desired heading
+
+7
+00:00:30,893 --> 00:00:34,524
+minus the heading we're in. And then we
+could use the PID controller, acting on,
+
+8
+00:00:34,648 --> 00:00:40,567
+e. And we should remember that we may not
+want to act directly on e because it's an
+
+9
+00:00:40,579 --> 00:00:46,535
+angle, so this little trick with arc
+tangents 2 would allow us to ensure that e
+
+10
+00:00:46,547 --> 00:00:52,211
+stays within minus pi and pi. Okay, let's
+use this to actually build a behavior that
+
+11
+00:00:52,223 --> 00:00:57,632
+takes us to a goal. So, the question then
+is, the only unknown here, which is what's
+
+12
+00:00:57,644 --> 00:01:02,815
+phi desired? Well, say we, we're located
+at x and y, we know where the goal is, x
+
+13
+00:01:02,827 --> 00:01:07,851
+goal and y goal. And, the way we know it
+is, either because of the sensor skirt
+
+14
+00:01:07,863 --> 00:01:12,834
+disc extraction we talked about, or some
+other way of knowing the goal location.
+
+15
+00:01:14,224 --> 00:01:20,850
+Well, it's not very hard to compute what's
+the desired angle is. It's simply y goal
+
+16
+00:01:20,862 --> 00:01:26,305
+minus y divided by x goal minus x, and
+then r tangent of that. So phi desired in
+
+17
+00:01:26,317 --> 00:01:32,915
+this case, of course, is this angle here.
+So that's given by this arc tangent
+
+18
+00:01:32,927 --> 00:01:39,865
+formula. So now all we do is we plug it in
+to get the error, then we plug the error
+
+19
+00:01:39,877 --> 00:01:47,040
+in to get the controller and then we hook
+the controller in to get the update on, on
+
+20
+00:01:47,052 --> 00:01:52,382
+the heading. Okay, so without further ado,
+let's do it. Okay, here's my first.
+
+21
+00:01:52,394 --> 00:01:57,678
+attempt, look at this we're getting there,
+what? Alright what just happened here?
+
+22
+00:01:57,787 --> 00:02:02,808
+This was attempt 1 and well, the robot
+started out, started out looking in the
+
+23
+00:02:02,820 --> 00:02:08,129
+wrong direction and then it was starting
+to turn nicely, maybe not enough but, and
+
+24
+00:02:08,141 --> 00:02:16,472
+then something happened, and it seem to
+happen roughly when the angle here was
+
+25
+00:02:16,915 --> 00:02:25,075
+close to minus pi over 2, but in fact this
+is exactly what happened. The problem here
+
+26
+00:02:25,087 --> 00:02:31,960
+is that I forgot that I was dealing with
+angles So the issue is, da, da, da, da,
+
+27
+00:02:32,072 --> 00:02:37,610
+angles. As we talked about, let's not plug
+in angles right away. Let's always make
+
+28
+00:02:37,622 --> 00:02:43,460
+sure that they are within -pi and pi. And
+by the way, only in this case was just k
+
+29
+00:02:43,472 --> 00:02:48,210
+times the error. So it was a pure p
+regulator. No i and no t part. But this is
+
+30
+00:02:48,222 --> 00:02:53,760
+what happens. Even if you do a nice design
+and you forget that you're dealing with
+
+31
+00:02:53,772 --> 00:02:58,748
+angles instead of other entities. So.
+Let's go to attempt two. The same
+
+32
+00:02:58,760 --> 00:03:05,439
+controller. Now I'm putting omega equal to
+within quotations here. This simply means
+
+33
+00:03:05,451 --> 00:03:10,452
+that it's not exactly this, because I'm
+doing the arc tangent 2 on this. And,
+
+34
+00:03:10,563 --> 00:03:16,107
+let's see what the robot is doing. It's
+spiraling around the starry air a little
+
+35
+00:03:16,119 --> 00:03:25,423
+bit. Eh, not, not that great, I must say.
+So what seems to be the matter? Well, the
+
+36
+00:03:25,435 --> 00:03:33,488
+problem is the following. I'm driving the
+car at a constant speed, V naught.
+
+37
+00:03:33,492 --> 00:03:38,101
+And then I'm turning based on this
+equation up here. And it doesn't seem like
+
+38
+00:03:38,113 --> 00:03:43,023
+I'm turning fast enough. You know, if I'm
+going really fast, then I need to turn a
+
+39
+00:03:43,035 --> 00:03:48,246
+lot to, to, actually get to where I want.
+So the problem is simply that I'm not
+
+40
+00:03:48,258 --> 00:03:52,733
+turning quickly enough. Or maybe I should
+slow down when I get closer to an
+
+41
+00:03:52,745 --> 00:03:57,714
+obstacle. And, in truth, if you're
+controlling v and omega at the same time,
+
+42
+00:03:57,818 --> 00:04:03,467
+you need to be a little bit more, you need
+to be cle-, more smart in your control
+
+43
+00:04:03,479 --> 00:04:09,654
+design than just a PID regulator on the,
+the heading error. But, since this is what
+
+44
+00:04:09,666 --> 00:04:15,262
+we're doing right now, simply what we
+should observe is the gain is not high
+
+45
+00:04:15,274 --> 00:04:20,953
+enough. K is not high enough to steer us
+towards where we would like to go. So,
+
+46
+00:04:21,059 --> 00:04:26,170
+let's do the same thing. But let's make k
+bigger. So this is attempt 3. We're doing
+
+47
+00:04:26,182 --> 00:04:31,431
+the same thing. We have k big. And again,
+we have the quotations there, because it's
+
+48
+00:04:31,443 --> 00:04:36,567
+not exactly this we're doing. What we're
+really doing is this arc tan 2 trick on
+
+49
+00:04:36,579 --> 00:04:41,665
+the, the error on the angles, to make sure
+that we get something between -pi and pi.
+
+50
+00:04:41,932 --> 00:04:47,660
+And, this is just right. This was a
+successful control design and in fact,
+
+51
+00:04:47,786 --> 00:04:54,429
+pure p part, and I don't know if you
+remember this video that I showed you that
+
+52
+00:04:54,441 --> 00:05:01,693
+showed how the metric drift was happening.
+It was this video. Well, let's look at it
+
+53
+00:05:01,705 --> 00:05:05,942
+again. >> Go!
+>> And, this time I have the volume up,
+
+54
+00:05:06,050 --> 00:05:11,099
+because it's really exciting! This is a
+competition, and what these robots are
+
+55
+00:05:11,111 --> 00:05:15,596
+doing is exactly what we just saw.
+Obstacle, no, goal to goal using a P
+
+56
+00:05:15,608 --> 00:05:21,588
+regulator, and this is a competition of
+the P games. And, in this case, one robot
+
+57
+00:05:21,600 --> 00:05:26,369
+did well, and the other was forced out of
+bounds. But, this was exactly the
+
+58
+00:05:26,381 --> 00:00:00,000
+controller. that was running on this kind
+of robot.
+
+59
+00:00:00,000 --> 00:00:00,000
+Okay.
