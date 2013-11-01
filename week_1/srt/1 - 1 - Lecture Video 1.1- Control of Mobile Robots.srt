@@ -1,0 +1,499 @@
+
+1
+00:00:00,012 --> 00:00:05,605
+Hello, my name is Magnus Egerstedt and I'm
+a professor at The Georgia Institute of
+
+2
+00:00:05,617 --> 00:00:11,036
+Technology and I will be teaching this
+Coursera course Control of Mobile Robots
+
+3
+00:00:11,048 --> 00:00:16,147
+and this course is really going to be
+structured around controls on one side
+
+4
+00:00:16,159 --> 00:00:21,189
+which is this rather general framework for
+making dynamical systems do awesome
+
+5
+00:00:21,201 --> 00:00:25,877
+things, and robotics on the other which is
+a particular type of system that we're
+
+6
+00:00:25,889 --> 00:00:30,334
+going to be focusing on. And the first
+module of the course is really going to be
+
+7
+00:00:30,346 --> 00:00:34,997
+on an introduction to controls. Basically
+we're going to talk about some of the key
+
+8
+00:00:35,009 --> 00:00:41,164
+concepts That we're going to need in order
+to effectively control mobile robots. But,
+
+9
+00:00:41,280 --> 00:00:46,587
+what I would like to do first is talk a
+little bit about who I am in terms of my
+
+10
+00:00:46,599 --> 00:00:52,335
+research interest and see how this maps
+onto what is actually happening in the
+
+11
+00:00:52,347 --> 00:00:57,842
+course. So, I'm a professor in Electrical
+and Computer Engineering, and my, my
+
+12
+00:00:57,854 --> 00:01:03,428
+research is really focusing on two rather
+distinct thrusts. One is an intellectual
+
+13
+00:01:03,440 --> 00:01:08,731
+hammer, which is control theories, so this
+is a general framework for making
+
+14
+00:01:08,743 --> 00:01:14,926
+dynamical systems do awesome things.
+And then, I have this intellectual hammer
+
+15
+00:01:14,938 --> 00:01:19,581
+that I hit on the head of a, an
+application nail, if you will. And the
+
+16
+00:01:19,593 --> 00:01:25,225
+application nail is robotics. So I spent
+most of my practical time on making robots
+
+17
+00:01:25,237 --> 00:01:31,172
+do interesting things. And, that's lucky
+for you because the topic of this course
+
+18
+00:01:31,184 --> 00:01:35,785
+is exactly this marriage of control theory
+of and robotics.
+
+19
+00:01:35,785 --> 00:01:41,188
+And my research is really focusing on
+three different type of robotic problems.
+
+20
+00:01:41,306 --> 00:01:46,691
+The one I'm very interested is swarm
+robotics and the question there is how do
+
+21
+00:01:46,703 --> 00:01:52,145
+you make large collections of mobile
+robots do useful and interesting things,
+
+22
+00:01:52,257 --> 00:01:57,870
+with limited information. And we're going
+to see how to design swarm algorithms for
+
+23
+00:01:57,882 --> 00:02:03,720
+mobile robots in this, this class. another
+area that I'm interested in is behavior
+
+24
+00:02:03,732 --> 00:02:09,495
+based control. And the idea is, since most
+robotic tasks are rather complex, there is
+
+25
+00:02:09,507 --> 00:02:13,789
+no single controller that can solve the
+problem, and instead you have to break the
+
+26
+00:02:13,801 --> 00:02:17,919
+controller structure do wn into multiple
+controllers. So for instance, if you have
+
+27
+00:02:17,931 --> 00:02:21,746
+a robot that's suppose to go to a goal,
+you have one controller that takes you
+
+28
+00:02:21,758 --> 00:02:25,737
+towards the goal, but then on modeled
+obstacles thrown up in the path or in the
+
+29
+00:02:25,749 --> 00:02:29,945
+way so then you have to switch to another
+behavior that ensures that you don't slam
+
+30
+00:02:29,957 --> 00:02:34,632
+into obstacles. And this idea of designing
+multiple controllers and switching between
+
+31
+00:02:34,644 --> 00:02:38,852
+them becomes even more important when you
+have complicated dynamical systems like
+
+32
+00:02:38,864 --> 00:02:43,690
+humanoid robots and snake robots or things
+that are highly articulated instead of
+
+33
+00:02:43,702 --> 00:02:48,449
+just robots on the ground. the last area
+that I am really interested in is field
+
+34
+00:02:48,461 --> 00:02:52,718
+robotics which really deals with how do
+you take these general computation
+
+35
+00:02:52,730 --> 00:02:57,364
+algorithms that you develop in the lab and
+put them on robots out in the field that
+
+36
+00:02:57,376 --> 00:03:01,469
+have to survive robustly in real
+conditions and this picture here I like
+
+37
+00:03:01,481 --> 00:03:05,944
+very much because three of the robots we
+are going to deal with in this in this
+
+38
+00:03:05,956 --> 00:03:10,746
+course are actually present. So, here is a
+little round robot. This is a caperim
+
+39
+00:03:10,758 --> 00:03:15,281
+mobile robot, that's a differential drive
+robot on the ground. We're going to
+
+40
+00:03:15,293 --> 00:03:20,133
+control these quite a lot. Up here in the
+air, is a quadroter, and these robots have
+
+41
+00:03:20,145 --> 00:03:24,469
+to be controled In a different way, but
+we're going to learn how to this as well,
+
+42
+00:03:24,567 --> 00:03:29,017
+and right here is a littel bipedal walking
+humanoid robot and all of these robots
+
+43
+00:03:29,029 --> 00:03:33,271
+will show up physically in the class
+throughout the, the various modules and
+
+44
+00:03:33,283 --> 00:03:37,417
+lectures. So here is actually an example
+of what I do and the reason why I'm
+
+45
+00:03:37,429 --> 00:03:41,538
+showing this video is, because a lot of
+the things we're going to learn in the
+
+46
+00:03:41,550 --> 00:03:46,150
+class are present here. So you have in
+this case 15 mobile robots on the ground
+
+47
+00:03:46,162 --> 00:03:51,285
+and they have to together solve some kind
+of coordinated control problem. In this
+
+48
+00:03:51,297 --> 00:03:56,380
+what case they have to do is, they have to
+spell GRITS because I am the director of
+
+49
+00:03:56,392 --> 00:04:01,560
+the GRITS lab which stands for Georgia
+Robotics and Intelligence Systems Lab. And
+
+50
+00:04:01,572 --> 00:04:06,440
+as you can see down on the left, there is
+a link to a lot of our videos that you can
+
+51
+00:04:06,452 --> 00:04:10,790
+find on YouTube. But talking a bout the
+robots here, what they need to do is they
+
+52
+00:04:10,802 --> 00:04:14,980
+need to use the information that's
+available to them and come up with control
+
+53
+00:04:14,992 --> 00:04:19,485
+strategies based on that. And in this case
+they had to figure out where they should
+
+54
+00:04:19,497 --> 00:04:24,015
+go in these particular formations. How
+they should go there. they also need to
+
+55
+00:04:24,027 --> 00:04:28,186
+deal with the fact that robot models The
+dynamics of these little guys,
+
+56
+00:04:28,290 --> 00:04:33,251
+surprisingly complicated and you should
+not slam into each other, you should also
+
+57
+00:04:33,263 --> 00:04:38,207
+be able to survive disturbances. So Ted
+here who's a former masters student in the
+
+58
+00:04:38,219 --> 00:04:42,870
+lab is actually messing with the system
+and the controllers have to be able to
+
+59
+00:04:42,882 --> 00:04:47,734
+overcome these, these disturbances and
+actually be robust to what is going on.
+
+60
+00:04:47,882 --> 00:04:53,584
+So, having said that what we are going to
+do in the course is develop control
+
+61
+00:04:53,596 --> 00:04:59,439
+theory, which is this general mathematical
+framework for making systems do useful
+
+62
+00:04:59,451 --> 00:05:04,845
+things. And then we're going to take
+robotics as the main application domain,
+
+63
+00:05:04,961 --> 00:05:10,568
+and we're going to couple robot models and
+robot problems too, but we develop on the
+
+64
+00:05:10,580 --> 00:05:15,771
+control theory side. And that's going to
+result in a number of different mobility
+
+65
+00:05:15,783 --> 00:05:20,715
+controllers. and we're also going to
+discuss a plethora of different
+
+66
+00:05:20,727 --> 00:05:25,655
+application domains found in robotics
+where our controllers are useful. I do
+
+67
+00:05:25,667 --> 00:05:30,770
+want to point out, which is almost as
+useful, what's not in the course. this
+
+68
+00:05:30,782 --> 00:05:35,235
+course is not a course on AI, in the sense
+that the robots aren't going to reason at
+
+69
+00:05:35,247 --> 00:05:39,320
+high level about where they should be
+going. Instead, someone has told the robot
+
+70
+00:05:39,332 --> 00:05:43,450
+where it should be going, and it's our job
+to make it go there. It's also not going
+
+71
+00:05:43,162 --> 00:05:47,070
+to be a course on perception, in the sense
+that we're going to assume that the
+
+72
+00:05:47,082 --> 00:05:52,734
+measurements we get are already reasonably
+good and they tell us roughly what it is
+
+73
+00:05:52,746 --> 00:05:57,539
+that we are interested in and need to
+know. we're also not dealing very much
+
+74
+00:05:57,551 --> 00:06:02,244
+with the actual design of robots, so a
+clever mechanical engineer has already
+
+75
+00:06:02,256 --> 00:06:06,965
+built it for us and it's our job to make
+this design do what it is that we want it
+
+76
+00:06:06,977 --> 00:06:12,586
+to do. So robotics typically People talk
+about the sense plan act paradigm where
+
+77
+00:06:12,598 --> 00:06:17,837
+sensing is the perception side, the
+planning is the AI side and the acting is
+
+78
+00:06:17,849 --> 00:06:23,344
+the control side. And this course falls
+squarely into the act domain. And I want
+
+79
+00:06:23,356 --> 00:06:28,695
+to end with showing a rather, I think, I'm
+using video, this is a course that I
+
+80
+00:06:28,707 --> 00:06:34,270
+taught on campus at Georgia Tech where
+part of the course was to design
+
+81
+00:06:34,282 --> 00:06:39,997
+controllers, very rudimentary controllers
+for making these robots go to goals
+
+82
+00:06:40,009 --> 00:06:45,992
+without actually running into obstacles.
+And we had students actually compete not
+
+83
+00:06:46,004 --> 00:06:51,853
+at the AI level or the perception level
+but purely on the controls level to
+
+84
+00:06:52,113 --> 00:06:56,923
+achieve certain tasks. So here you see for
+instance one robot that's a little too
+
+85
+00:06:56,935 --> 00:07:01,670
+aggressive. It's also oscillating, so
+there's something not perfect with this
+
+86
+00:07:01,682 --> 00:07:06,625
+control design. It's also a little slow.
+the robot over on the left is more, it
+
+87
+00:07:06,637 --> 00:07:10,600
+oscillates less, but it's a little bit
+slower. Here we have another example of
+
+88
+00:07:10,612 --> 00:07:14,925
+two other teams that are now competing
+against each other and you will see that
+
+89
+00:07:14,937 --> 00:07:18,730
+one robot is again a little
+overaggressive, the one on the right. And,
+
+90
+00:07:18,822 --> 00:07:22,725
+in fact it's going to be so aggressive
+that it loses track of what it is that it
+
+91
+00:07:22,737 --> 00:07:26,885
+is doing. So, this will be an example of
+a, maybe not so successful control design.
+
+92
+00:07:26,977 --> 00:07:30,770
+We will do this in this course. Now I
+realize that I can't shape one of these
+
+93
+00:07:30,782 --> 00:07:35,350
+robots to every one of you, so instead we
+are going to do this in the studio and
+
+94
+00:07:35,601 --> 00:07:40,009
+we're going to together develop the
+control algorithms that results in, this
+
+95
+00:07:40,021 --> 00:07:44,478
+would be the final race in this class. and
+take a look at team purple. This
+
+96
+00:07:44,490 --> 00:07:48,621
+controller is awesome. It's very
+deliberate. It oscillates very little.
+
+97
+00:07:48,721 --> 00:07:53,204
+There is very little overshoot. It's
+moving fast. And what's going on there is
+
+98
+00:07:53,216 --> 00:07:59,211
+just a small And slightly more informed
+control design. So team purple won in this
+
+99
+00:07:59,223 --> 00:08:05,212
+case. And with that I would like to
+conclude this first introductory lecture
+
+100
+00:08:05,224 --> 00:08:06,189
+to the course.

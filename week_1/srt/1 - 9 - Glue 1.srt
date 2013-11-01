@@ -1,0 +1,431 @@
+
+1
+00:00:00,012 --> 00:00:04,687
+Hello, my name is Amy LaViers and welcome 
+to our first of seven glue lectures. 
+
+2
+00:00:04,687 --> 00:00:08,222
+The point of this lecture, and we're 
+going to do one each week, 
+
+3
+00:00:08,222 --> 00:00:12,327
+is to connect what Dr. 
+Egerstedt has done in the lectures to the 
+
+4
+00:00:12,327 --> 00:00:16,122
+quizzes for each week. 
+So here, you'll get helpful hints about 
+
+5
+00:00:16,122 --> 00:00:20,362
+the quizzes and we'll kind of clarify and 
+repeat a few key concepts. 
+
+6
+00:00:20,362 --> 00:00:24,957
+so this is just meant to help you. 
+We'll do one a week and also be 
+
+7
+00:00:24,957 --> 00:00:31,155
+moderating Q&A forums if you have further 
+questions or need more guidance in the, 
+
+8
+00:00:31,155 --> 00:00:35,353
+in the course material. 
+So here, this is the first Glue Lecture 
+
+9
+00:00:35,353 --> 00:00:40,894
+and we're going to be covering Dynamical 
+Models today and this is really tailored 
+
+10
+00:00:40,894 --> 00:00:45,895
+to help with quiz one. 
+So [COUGH] I want to start with a picture 
+
+11
+00:00:45,895 --> 00:00:50,394
+of how we've kind of first are introduced 
+to derivatives. 
+
+12
+00:00:50,394 --> 00:00:56,601
+We typically think of, you know, if we 
+have this function x=t^2, we think of 
+
+13
+00:00:56,601 --> 00:01:02,103
+this graph where we have x here on the 
+y-axis and t here on the x-axis. 
+
+14
+00:01:02,103 --> 00:01:06,757
+And we think of this function as kind of 
+a line on a graph and we know if we take 
+
+15
+00:01:06,757 --> 00:01:11,269
+the derivative of t^2, we get 2t, 
+we get this straight line now for the 
+
+16
+00:01:11,269 --> 00:01:14,375
+first derivative, 
+and then our second derivative, which 
+
+17
+00:01:14,375 --> 00:01:18,569
+sort of see this straight line. 
+And so, this is definitely a useful way 
+
+18
+00:01:18,569 --> 00:01:23,262
+of thinking about derivitaves, 
+but in this, in this lecture I want us to 
+
+19
+00:01:23,262 --> 00:01:28,336
+kind of go beyond these lines on a graph 
+and think of these equations as 
+
+20
+00:01:28,336 --> 00:01:32,797
+describing something that's moving. 
+So I'm going to replay this once. 
+
+21
+00:01:32,797 --> 00:01:38,163
+Here, we have this ball moving in space, 
+right? Now, the axis don't mean anything 
+
+22
+00:01:38,163 --> 00:01:43,237
+necessarily and we just have this 
+animation that it's moving or we can 
+
+23
+00:01:43,237 --> 00:01:47,207
+think of our position here as x according 
+to t^2. 
+
+24
+00:01:47,207 --> 00:01:53,194
+So, we can think of this as our axis, we 
+have this one single axis, 
+
+25
+00:01:53,194 --> 00:01:59,415
+and the, the way that the ball is moving 
+is described by these equations here on 
+
+26
+00:01:59,415 --> 00:02:02,567
+the left. 
+And we can kind of ask the question of 
+
+27
+00:02:02,567 --> 00:02:07,121
+how does the ball know how to move? So if 
+these equations are describing the 
+
+28
+00:02:07,121 --> 00:02:12,152
+movement that we're seeing and we can 
+think of this as a system kind of what's 
+
+29
+00:02:12,152 --> 00:02:16,732
+going on? So to look at that, let's 
+imagine our ball in a discrete world. 
+
+30
+00:02:16,732 --> 00:02:22,815
+And we can remember from lecture that we 
+can figure out how these continuous 
+
+31
+00:02:22,815 --> 00:02:28,898
+equations translate into discrete time 
+using this taylor first order taylor 
+
+32
+00:02:28,898 --> 00:02:32,788
+approximation. 
+Let's choose our delta t to be 0.5 
+
+33
+00:02:32,788 --> 00:02:37,420
+seconds, and now, we can take this 
+previous system, where we had x dot 
+
+34
+00:02:37,420 --> 00:02:39,778
+equals 2t. 
+We can figure out what the equation in 
+
+35
+00:02:39,778 --> 00:02:42,930
+discrete time is to describe how the ball 
+should move. 
+
+36
+00:02:42,930 --> 00:02:46,604
+So, here, we have this. 
+We can think of it as an update equation, 
+
+37
+00:02:46,604 --> 00:02:50,811
+right? The next state is given by this 
+equation and it's a function of the 
+
+38
+00:02:50,811 --> 00:02:54,877
+current state. 
+So, to see how the ball moves, let's 
+
+39
+00:02:54,877 --> 00:02:58,722
+increment k. 
+We started here at zero, now k=1, 
+
+40
+00:02:58,722 --> 00:03:03,797
+we take the past state, and we add the 
+current value of k. 
+
+41
+00:03:03,797 --> 00:03:10,752
+Again, if we increment k to 2, we can see 
+that we take our past state, we add two, 
+
+42
+00:03:10,752 --> 00:03:14,681
+we get, 
+we're now at x=3, right? And so forth. 
+
+43
+00:03:14,681 --> 00:03:20,232
+So again, if we do it, and we can see 
+that, as we move, the ball is moving 
+
+44
+00:03:20,232 --> 00:03:25,777
+fast, you know, more blocks each time, 
+so it's moving faster and faster. And 
+
+45
+00:03:25,777 --> 00:03:32,262
+back to continuous time, we can see that 
+this is actually the equation that tell 
+
+46
+00:03:32,262 --> 00:03:37,007
+us how the ball is moving. 
+It's speeding up as it goes along and 
+
+47
+00:03:37,007 --> 00:03:42,182
+it's moving according to this equation x 
+dot, and this, is a dynamical model. 
+
+48
+00:03:42,182 --> 00:03:47,762
+In addition to this description, this 
+update rule, this differential equation, 
+
+49
+00:03:47,762 --> 00:03:52,992
+if we have an initial condition, so we 
+know where our ball needs to start. 
+
+50
+00:03:52,992 --> 00:03:57,306
+Let's see if I can play this again. 
+We see that, this is what happens, 
+
+51
+00:03:57,306 --> 00:04:01,802
+and so, we think of this as a dynamical 
+model and this is how we want to think 
+
+52
+00:04:01,802 --> 00:04:04,668
+about differential equations in this 
+course. 
+
+53
+00:04:04,668 --> 00:04:08,148
+So, an example. 
+What should we see when we see this? The 
+
+54
+00:04:08,148 --> 00:04:11,998
+first thing to do when we see a plot is 
+always look at the axis. 
+
+55
+00:04:11,998 --> 00:04:14,862
+We can see here that this is x versus 
+time. 
+
+56
+00:04:14,862 --> 00:04:19,033
+We can see that we start at some non-zero 
+initial condition and we can see that 
+
+57
+00:04:19,033 --> 00:04:23,254
+when that happens, we start to move and 
+we move kind of, we, we don't move in a, 
+
+58
+00:04:23,254 --> 00:04:26,887
+at a constant rate, right? 
+If we moved at a constant rate, we would 
+
+59
+00:04:26,887 --> 00:04:31,227
+see this straight line, but we can see 
+that actually what's happening is we're 
+
+60
+00:04:31,227 --> 00:04:36,491
+speeding up as we go, as time increases, 
+and so, we can infer certain things about 
+
+61
+00:04:36,491 --> 00:04:40,885
+what x dot looks like, then. 
+Right? So x dot is going to be something 
+
+62
+00:04:40,885 --> 00:04:45,684
+that increases with time. 
+And, in fact, here, what we have is that 
+
+63
+00:04:45,684 --> 00:04:48,894
+x dot is 2t. 
+So this is at a plot that we just saw 
+
+64
+00:04:48,894 --> 00:04:54,360
+animated with the pink ball. 
+So, next, what we might see, is we might 
+
+65
+00:04:54,360 --> 00:04:59,658
+be presented with a,a dynamical model. 
+What should be think when we see this? 
+
+66
+00:04:59,658 --> 00:05:05,081
+Well, first of all, these x of t's, 
+we'll sometimes just write them as x as a 
+
+67
+00:05:05,081 --> 00:05:09,512
+sort of shorthand. 
+And, what we can try to ask about this 
+
+68
+00:05:09,512 --> 00:05:15,662
+model is what does x of t look like? So, 
+what's the trajectory described by this 
+
+69
+00:05:15,662 --> 00:05:21,497
+system? And, what happens at time equal 
+to infinity, right? And that means, what 
+
+70
+00:05:21,497 --> 00:05:27,007
+happens after a long time to this system? 
+So, if we want to find x of t, we just 
+
+71
+00:05:27,007 --> 00:05:32,502
+need to integrate our differential 
+equation or sometimes what we can do is 
+
+72
+00:05:32,502 --> 00:05:37,712
+just guess a trajectory a form for x of 
+t, and then check, and the way you check 
+
+73
+00:05:37,712 --> 00:05:42,567
+is just by differentiating. 
+So here, this is pretty easy, right? 
+
+74
+00:05:42,567 --> 00:05:46,427
+We can see that when we differentiate 
+x^2/2, we get x. 
+
+75
+00:05:46,427 --> 00:05:51,212
+So this is the form of x of t. 
+It's going to be some kind of problem, 
+
+76
+00:05:51,212 --> 00:05:54,325
+right? 
+And the second thing that we might ask 
+
+77
+00:05:54,325 --> 00:05:58,861
+this idea of what happens long term to 
+the system is just a matter of 
+
+78
+00:05:58,861 --> 00:06:01,908
+considering what happens when x stops 
+moving? 
+
+79
+00:06:01,908 --> 00:06:07,224
+Because when x stops moving, we're stuck, 
+right? That's where our system ends up. 
+
+80
+00:06:07,224 --> 00:06:12,042
+So, if we plug in what it means for x to 
+stop moving is for x dot to be zero. 
+
+81
+00:06:12,042 --> 00:06:15,372
+If we plug this in to our dynamical 
+system, 
+
+82
+00:06:15,372 --> 00:06:21,831
+we find that that means that x=0. 
+So long term with this system, what's 
+
+83
+00:06:21,831 --> 00:06:27,121
+going to happen is x is going to rest at 
+zero and we call this an equilibrium 
+
+84
+00:06:27,121 --> 00:06:30,778
+point, 
+because the system isn't moving at this 
+
+85
+00:06:30,778 --> 00:06:33,002
+point. 
+So, that wraps up our lecture. 
+
+86
+00:06:33,002 --> 00:06:38,319
+good luck with Quiz 1, and I'll see you 
+at the forums. 
+
