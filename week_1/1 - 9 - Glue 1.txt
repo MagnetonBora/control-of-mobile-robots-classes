@@ -1,0 +1,174 @@
+
+Hello, my name is Amy LaViers and welcome 
+to our first of seven glue lectures. 
+The point of this lecture, and we're 
+going to do one each week, 
+is to connect what Dr. 
+Egerstedt has done in the lectures to the 
+quizzes for each week. 
+So here, you'll get helpful hints about 
+the quizzes and we'll kind of clarify and 
+repeat a few key concepts. 
+so this is just meant to help you. 
+We'll do one a week and also be 
+moderating Q&A forums if you have further 
+questions or need more guidance in the, 
+in the course material. 
+So here, this is the first Glue Lecture 
+and we're going to be covering Dynamical 
+Models today and this is really tailored 
+to help with quiz one. 
+So [COUGH] I want to start with a picture 
+of how we've kind of first are introduced 
+to derivatives. 
+We typically think of, you know, if we 
+have this function x=t^2, we think of 
+this graph where we have x here on the 
+y-axis and t here on the x-axis. 
+And we think of this function as kind of 
+a line on a graph and we know if we take 
+the derivative of t^2, we get 2t, 
+we get this straight line now for the 
+first derivative, 
+and then our second derivative, which 
+sort of see this straight line. 
+And so, this is definitely a useful way 
+of thinking about derivitaves, 
+but in this, in this lecture I want us to 
+kind of go beyond these lines on a graph 
+and think of these equations as 
+describing something that's moving. 
+So I'm going to replay this once. 
+Here, we have this ball moving in space, 
+right? Now, the axis don't mean anything 
+necessarily and we just have this 
+animation that it's moving or we can 
+think of our position here as x according 
+to t^2. 
+So, we can think of this as our axis, we 
+have this one single axis, 
+and the, the way that the ball is moving 
+is described by these equations here on 
+the left. 
+And we can kind of ask the question of 
+how does the ball know how to move? So if 
+these equations are describing the 
+movement that we're seeing and we can 
+think of this as a system kind of what's 
+going on? So to look at that, let's 
+imagine our ball in a discrete world. 
+And we can remember from lecture that we 
+can figure out how these continuous 
+equations translate into discrete time 
+using this taylor first order taylor 
+approximation. 
+Let's choose our delta t to be 0.5 
+seconds, and now, we can take this 
+previous system, where we had x dot 
+equals 2t. 
+We can figure out what the equation in 
+discrete time is to describe how the ball 
+should move. 
+So, here, we have this. 
+We can think of it as an update equation, 
+right? The next state is given by this 
+equation and it's a function of the 
+current state. 
+So, to see how the ball moves, let's 
+increment k. 
+We started here at zero, now k=1, 
+we take the past state, and we add the 
+current value of k. 
+Again, if we increment k to 2, we can see 
+that we take our past state, we add two, 
+we get, 
+we're now at x=3, right? And so forth. 
+So again, if we do it, and we can see 
+that, as we move, the ball is moving 
+fast, you know, more blocks each time, 
+so it's moving faster and faster. And 
+back to continuous time, we can see that 
+this is actually the equation that tell 
+us how the ball is moving. 
+It's speeding up as it goes along and 
+it's moving according to this equation x 
+dot, and this, is a dynamical model. 
+In addition to this description, this 
+update rule, this differential equation, 
+if we have an initial condition, so we 
+know where our ball needs to start. 
+Let's see if I can play this again. 
+We see that, this is what happens, 
+and so, we think of this as a dynamical 
+model and this is how we want to think 
+about differential equations in this 
+course. 
+So, an example. 
+What should we see when we see this? The 
+first thing to do when we see a plot is 
+always look at the axis. 
+We can see here that this is x versus 
+time. 
+We can see that we start at some non-zero 
+initial condition and we can see that 
+when that happens, we start to move and 
+we move kind of, we, we don't move in a, 
+at a constant rate, right? 
+If we moved at a constant rate, we would 
+see this straight line, but we can see 
+that actually what's happening is we're 
+speeding up as we go, as time increases, 
+and so, we can infer certain things about 
+what x dot looks like, then. 
+Right? So x dot is going to be something 
+that increases with time. 
+And, in fact, here, what we have is that 
+x dot is 2t. 
+So this is at a plot that we just saw 
+animated with the pink ball. 
+So, next, what we might see, is we might 
+be presented with a,a dynamical model. 
+What should be think when we see this? 
+Well, first of all, these x of t's, 
+we'll sometimes just write them as x as a 
+sort of shorthand. 
+And, what we can try to ask about this 
+model is what does x of t look like? So, 
+what's the trajectory described by this 
+system? And, what happens at time equal 
+to infinity, right? And that means, what 
+happens after a long time to this system? 
+So, if we want to find x of t, we just 
+need to integrate our differential 
+equation or sometimes what we can do is 
+just guess a trajectory a form for x of 
+t, and then check, and the way you check 
+is just by differentiating. 
+So here, this is pretty easy, right? 
+We can see that when we differentiate 
+x^2/2, we get x. 
+So this is the form of x of t. 
+It's going to be some kind of problem, 
+right? 
+And the second thing that we might ask 
+this idea of what happens long term to 
+the system is just a matter of 
+considering what happens when x stops 
+moving? 
+Because when x stops moving, we're stuck, 
+right? That's where our system ends up. 
+So, if we plug in what it means for x to 
+stop moving is for x dot to be zero. 
+If we plug this in to our dynamical 
+system, 
+we find that that means that x=0. 
+So long term with this system, what's 
+going to happen is x is going to rest at 
+zero and we call this an equilibrium 
+point, 
+because the system isn't moving at this 
+point. 
+So, that wraps up our lecture. 
+good luck with Quiz 1, and I'll see you 
+at the forums. 
+
